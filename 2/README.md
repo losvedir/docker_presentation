@@ -13,10 +13,10 @@ See how the Kernel manages all those processes? Modern Linux kernels provide a l
 
 Docker uses these underlying kernel features to run *containers* at native speed but isolated from each other. [From Docker](https://www.docker.com/what-container):
 
-~[Docker Containers](docker-containers.png)
+![Docker Containers](docker-containers.png)
 
 Notice that there's just one kernel. Each container is a group of processes that are isolated from the other containers, but they're running natively against the kernel, and not through a virtualization layer. There are even three Linux distros in there, but all using the same kernel. This is in contrast to the way, say, [VirtualBox works](https://www.howtogeek.com/66734/htg-explains-what-is-a-hypervisor/), which emulates an entire guest operating system (including the kernel):
 
-~[VirtualBox VMs](vms.png)
+![VirtualBox VMs](vms.png)
 
 However, note that this all applies to *Linux*, where Docker got its start. On OS X, which doesn't use a Linux kernel, Docker for Mac sets up a virtualized Linux layer that Docker can run on top of.
