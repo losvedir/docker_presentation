@@ -12,7 +12,7 @@ You write a *Dockerfile* in order to build an *image* that runs in a *container*
 
 * Image - I think of it as a (potentially very large) binary artifact produced by building the Dockerfile. Docker describes it as "An Image is an ordered collection of root filesystem changes and the corresponding execution parameters for use within a container runtime."
 
-* Container - "a runtime instance of an image". Think "classes" vs "instances" in OOP. One immutable docker image, which describes an environment, can get "instantiated" into multiple isolated containers, each with their own state.
+* Container - "a runtime instance of an image". Think "classes" vs "instances" in OOP. One immutable docker image, which describes an environment, can get "instantiated" into multiple isolated containers, each with their own running processes and state.
 
 * Docker Hub - an online repository of public docker images. Think "npm" or "hex.pm" for docker images.
 
