@@ -1,4 +1,4 @@
-# Docker on AWS Part 1
+# Docker on AWS
 
 AWS offers multiple ways to run Docker containers in the cloud. We use two approaches here at CTD. The first is well suited to web applications and is called Elastic Beanstalk (EB). The other is for any sort of application and is called Elastic Container Service (ECS).
 
