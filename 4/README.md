@@ -6,7 +6,7 @@ Previously, the container started up, ran, and then ended. Now we'll see a conta
 
 Here's the new Dockerfile:
 
-```
+``` Dockerfile
 FROM alpine:latest
 RUN mkdir "scripts"
 COPY script.sh scripts
@@ -37,3 +37,80 @@ The terminal should now be repeatedly printing out `alive...`. Kill it with `Ctr
 ```
 docker run -d demo:4
 ```
+
+That will return a long hash identifying the running container, but give back the command prompt. To see running docker containers you can use the following command:
+
+```
+docker ps
+```
+
+Note that there is a process running with the same hash as the one just returned.
+
+One thing that you can do is execute a shell running on that same container:
+
+```
+docker exec -it [hash] /bin/ash
+```
+
+Inside the shell, you can see the bash script running in another process with
+
+```
+ps
+```
+
+Leave the shell with `Ctrl-D`.
+
+To reiterate the class vs. instance point, try starting another container based on the same image:
+
+```
+docker run -d demo:4
+```
+
+If you do `docker ps` now, you should see two processes. Verify that one of them is running with the `docker logs` command:
+
+```
+docker logs [container]
+```
+
+You can also kill a container:
+
+```
+docker kill [container]
+docker ps # to see that it's no longer running
+```
+
+Another way to stop the container is to attach your shell's STDIN/OUT/ERR to it, and then send a Ctrl-C that way:
+
+```
+docker attach [container]
+Ctrl-C
+docker ps
+```
+
+## Layers
+
+One interesting thing to understand about the docker system is that each image is composed of several layers. Run the docker build command again, and pay close attention to the output. Here's what I have:
+
+```
+$ docker build -t demo:4 4/
+Sending build context to Docker daemon  6.656kB
+Step 1/4 : FROM alpine:latest
+ ---> 3fd9065eaf02
+Step 2/4 : RUN mkdir "scripts"
+ ---> Using cache
+ ---> bc8d5e115dea
+Step 3/4 : COPY script.sh scripts
+ ---> Using cache
+ ---> 683c5a209298
+Step 4/4 : CMD ["ash", "scripts/script.sh"]
+ ---> Using cache
+ ---> d471e1899611
+Successfully built d471e1899611
+Successfully tagged demo:4
+```
+
+Notice all the `--> [hash]` lines. Each line of the `Dockerfile` actually generates an intermediate image. You can see all these images if you run `docker images --all` (the `-all` includes intermediate images, which are normally hidden).
+
+Just like any docker image, you can run a container based on them with `docker run`. If you include a command at the end of `docker run` it will run that command in the context of the container. Try running `docker run -it [hash] /bin/ash` for each of those steps, and comparing the output of `ls` with regard to the presence of the `scripts` directory and the `scripts/script.sh` file.
+
+This is an optimization that docker provides: if different scripts share layers (e.g., same base image, or same few commands on top of that base image) then the actual images themselves are shared.
