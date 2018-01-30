@@ -53,7 +53,11 @@ Now let's run it on AWS EB.
 
 Zip it up, upload it to EB.
 
+```
+7 $ zip -r app.zip ./*
+```
+
 ## Elastic Container Service
 
-With the ECS approach, we build a docker image elsewhere (Semaphore), and upload it to our ECS image registry. It's like Docker Hub but private. We can then run those images on instances we control, or in their general shared cloud called "Fargate". The ECS approach is used by our `rtr` and `concentrate` applications.
+With the ECS approach, we build a docker image elsewhere (e.g. Semaphore), and upload it to our ECS image registry. It's like Docker Hub but private. We can then run those images on instances we control, or in their general shared cloud called "Fargate". The ECS approach is used by our `rtr` and `concentrate` applications.
 
