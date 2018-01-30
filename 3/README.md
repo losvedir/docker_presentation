@@ -28,6 +28,14 @@ All this is done with subcommands of the `docker` CLI tool.
 
 * `docker run foo:latest` - this will start running a container based on the image given to it.
 
+
+Or, visually:
+
+```
+             docker build          docker run
+[Dockerfile] ------------> [Image] -----------> [Container]
+```
+
 ## Explanation of this Dockerfile
 
 This folder includes a Dockerfile with these contents:
